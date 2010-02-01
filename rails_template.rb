@@ -1,9 +1,6 @@
 # My version of an app template, modified by James Cox (imajes)
 # SUPER DARING APP TEMPLATE 1.0 - By Peter Cooper
 
-# Link to local copy of edge rails
-inside('vendor') { run 'ln -s ~/src/git/rails rails' }
-inside('vendor/rails') { run 'git pull' }
 
 # Delete unnecessary files
 run "rm README"
@@ -43,37 +40,9 @@ ActionController::Base.session_store = :active_record_store
   END
 
 # Install plugins
-## Those that relate to testing
-# RSpec is the original Behaviour Driven Development framework for Ruby.
-plugin 'rspec', :git => "git://github.com/dchelimsky/rspec.git"
-
-# RSpec's official Ruby on Rails plugin  
-plugin 'rspec-rails', :git => "git://github.com/dchelimsky/rspec-rails.git"
-
-# Fixture replacement for focused and readable tests.
-plugin 'object_daddy', :git => "git://github.com/flogic/object_daddy.git"
-
-# BDD that talks to domain experts first and code 2nd
-plugin 'cucumber', :git => "git://github.com/aslakhellesoy/cucumber.git"
-
-generate("rspec")
-generate("cucumber")
-gem 'faker'
-
-## setup for the win
-inside ('spec') { 
-  run "mkdir exemplars"
-  run "rm -rf fixtures"
-  run "rm spec_helper.rb spec.opts rcov.opts"
-  run "curl -sL http://github.com/imajes/rails-template/raw/master/spec_helper.rb > spec_helper.rb"
-  run "curl -sL http://github.com/imajes/rails-template/raw/master/rcov.opts > rcov.opts"
-  run "curl -sL http://github.com/imajes/rails-template/raw/master/spec.opts > spec.opts"
-  
-}
 
 ## Potentially Useful 
 plugin 'asset_packager', :git => 'git://github.com/sbecker/asset_packager.git'
-plugin 'hoptoad_notifier', :git => 'git://github.com/thoughtbot/hoptoad_notifier.git'
 
 ## user related
 if yes?("Will this app have authenticated users?")
@@ -97,10 +66,7 @@ if yes?("Do you want tags with that?")
 end
 
 # require some gems
-if yes?("Want to require a bunch of useful gems?")
-  gem 'hpricot', :source => 'http://code.whytheluckystiff.net'
-  gem 'RedCloth', :lib => 'redcloth'
-end
+
 
 # Final install steps
 rake('gems:install', :sudo => true)
@@ -115,7 +81,5 @@ git :add => '.'
 git :commit => "-a -m 'First POST!'"
 
 # Success!
-puts "SUCCESS! - remember to setup hoptoad with the following:"
-puts "HoptoadNotifier.configure do |config|
-  config.api_key = '1234567890abcdef'
-end"
+puts "SUCCESS!"
+
